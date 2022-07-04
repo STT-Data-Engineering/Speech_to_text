@@ -22,6 +22,9 @@
 * [Diye Mark](https://github.com/Danu-B)
 * [Danayt Bulom](https://github.com/DiyeMark)
 
+![Contributors list](https://contrib.rocks/image?repo=STT-Data-Engineering/Speech_to_text)
+
+Made with [contrib.rocks](https://contrib.rocks).
 ## Liscence 
 * [MIT](https://github.com/STT-Data-Engineering/Speech_to_text/blob/main/LICENSE)
  
