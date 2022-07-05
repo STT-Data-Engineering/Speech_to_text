@@ -14,14 +14,6 @@
 
 ## Contributors
 
-* [Selam Ayehubirhan](https://github.com/sel6) 
-* [Henok Tilaye](https://github.com/Hen0k)
-* [Biruk Getaneh](https://github.com/bkget)
-* [Kevin Shyaka](https://github.com/skevin-dev)
-* [Tadesse Kabede](https://github.com/tadesse381)
-* [Diye Mark](https://github.com/Danu-B)
-* [Danayt Bulom](https://github.com/DiyeMark)
-
 ![Contributors list](https://contrib.rocks/image?repo=STT-Data-Engineering/Speech_to_text)
 
 Made with [contrib.rocks](https://contrib.rocks).
