@@ -9,7 +9,7 @@
 
 
 ## Architecture
-![speech-to-text deep learning architecture](images/end-to-end-details-design.JPG)
+![Speech-to-text data collection](data/end-to-end-details-design.JPG)
 
 ## Installation
 ## Contributors
