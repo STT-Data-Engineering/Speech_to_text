@@ -8,6 +8,7 @@
 <a href="https://github.com/STT-Data-Engineering/Speech_to_text/blob/main/LICENSE"><img src="https://img.shields.io/github/license/STT-Data-Engineering/Speech_to_text?color=2b9348" alt="License Badge"/></a>
 </div>
 </br>
+
 ## Introduction
 
  The aim of this project is to produce a tool that can be deployed to process posting and receiving text and audio files from and into a data lake, apply transformation in a distributed manner, and load it into a warehouse in a suitable format to train a speech-to-text model. 
