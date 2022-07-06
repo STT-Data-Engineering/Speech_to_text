@@ -20,9 +20,6 @@
 ![Speech-to-text data collection](data/end-to-end-details-design.jpg)
 
 ## Installation
-## Contributors
-
-![Contributors list](https://contrib.rocks/image?repo=STT-Data-Engineering/Speech_to_text)
 
 ## Liscence 
 * [MIT](https://github.com/STT-Data-Engineering/Speech_to_text/blob/main/LICENSE)
