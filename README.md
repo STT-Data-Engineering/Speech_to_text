@@ -9,7 +9,7 @@
 
 
 ## Architecture
-![Speech-to-text data collection](data/end-to-end-details-design.JPG)
+![Speech-to-text data collection](data/end-to-end-details-design.jpg)
 
 ## Installation
 ## Contributors
