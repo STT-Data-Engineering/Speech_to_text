@@ -7,11 +7,11 @@
 ## Pipeline
   This is our pipeline of this project that will be used to record millions of Amharic and Swahili speakers reading digital texts in-app and web platforms. 
 
+
+## Architecture
+![speech-to-text deep learning architecture](images/end-to-end-details-design.JPG)
+
 ## Installation
-
-
-
-
 ## Contributors
 
 ![Contributors list](https://contrib.rocks/image?repo=STT-Data-Engineering/Speech_to_text)
