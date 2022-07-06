@@ -1,5 +1,4 @@
 data/preprocessed.tar.xz
-data/Amharic_News_Dataset.csv
 .dvc/config.local
 .dvc/tmp
 .dvc/cache
