@@ -3,4 +3,5 @@ data/preprocessed.tar.xz
 .dvc/tmp
 .dvc/cache
 
-
+# Pycharm files
+.idea/
