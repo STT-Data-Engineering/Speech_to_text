@@ -20,6 +20,7 @@ The aim of this project is to produce a tool that can be deployed to process pos
 ## Architecture
 ![Speech-to-text data collection](data/end-to-end-details-design.jpg)
 
+## Project Structure
 ## Installation
 
 
