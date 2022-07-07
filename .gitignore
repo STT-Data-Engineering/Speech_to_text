@@ -5,3 +5,5 @@ data/preprocessed.tar.xz
 
 # Pycharm files
 .idea/
+
+*/__pycache__
