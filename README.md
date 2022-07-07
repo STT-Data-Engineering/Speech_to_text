@@ -21,6 +21,8 @@ The aim of this project is to produce a tool that can be deployed to process pos
 ![Speech-to-text data collection](data/end-to-end-details-design.jpg)
 
 ## Project Structure
+There are several files in the repository, including Python scripts, Jupyter notebooks,  and text files. 
+
 ## Installation
 
 ## Contributors
