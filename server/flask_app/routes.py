@@ -1,13 +1,12 @@
 """Routes for parent Flask app."""
 import sys
 sys.path.append('../scripts')
-
 from all_kafka import AllKafka
-from kafka.errors import NoBrokersAvailable
-from pprint import pprint
-from flask_app.helpers import get_uuid
-from flask_app.helpers import extract_audio
 from flask import request, jsonify
+from flask_app.helpers import extract_audio
+from flask_app.helpers import get_uuid
+from pprint import pprint
+from kafka.errors import NoBrokersAvailable
 
 
 

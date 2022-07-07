@@ -8,8 +8,9 @@ cors = CORS()
 
 def init_app():
     """Construct core Flask application."""
-    app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object('config.ApplicationConfig')
+    # app = Flask(__name__, instance_relative_config=False)
+    app = Flask(__name__)
+    # app.config.from_object('config.ApplicationConfig')
 
     # Initialize Plugins
 
