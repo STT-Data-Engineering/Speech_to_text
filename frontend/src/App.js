@@ -6,12 +6,13 @@ import {MicrophoneIcon} from "@heroicons/react/solid";
 import { Icon } from '@iconify/react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import axios from 'axios';
 
 function App() {
     const [recordState, setRecordState] = useState(null);
     const [audioData, setAudioData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [sentence, setSentence] = useState('hey');
     const Spinner = require('react-spinkit');
 
     const stop = () => {
@@ -31,14 +32,41 @@ function App() {
         setAudioData(null);
     }
 
+    const loadText = () => {
+        console.log("loading text")
+        setSentence("አገራችን ከአፍሪካም ሆነ ከሌሎች የአለም አገራት ጋር ያላትን አለም አቀፋዊ ግንኙነት ወደ ላቀ ደረጃ ያሸጋገረ ሆኗል በአገር ውስጥ አራት አለም")
+        
+    }
+
     const upload = () => {
         console.log('uploading...')
+        axios({
+            method: 'POST',
+            url: 'http://localhost:8888/submit',
+            data: {
+                sentence: sentence,
+                transcription: audioData
+            }
+        })
+        .then((response) => {
+            console.log("sending transcription")
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+                }
+            })
     }
 
     const skip = () => {
         setLoading(true);
-        setRecordState(null);
-        setAudioData(null);
+        loadText();
+        
+        clear();
+        setLoading(false);
+        
     }
 
     const onStop = (data) => {
@@ -95,8 +123,10 @@ function App() {
                   <Skeleton height={30} width={1000} count={2} />
                   :
                   <p className='text-2xl text-center font-bold'>
-                      አገራችን ከአፍሪካም ሆነ ከሌሎች የአለም አገራት ጋር ያላትን አለም
-                      አቀፋዊ ግንኙነት ወደ ላቀ ደረጃ ያሸጋገረ ሆኗል በአገር ውስጥ አራት አለም
+                      {
+                      sentence
+                      }
+
                   </p>
               }
 
