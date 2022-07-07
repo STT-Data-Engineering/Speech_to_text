@@ -14,7 +14,6 @@
 - [Introduction](#Introduction)
 - [Pipeline](#Pipeline)
 - [Architecture](#Architecture)
-- [Data](#data)
 - [Project  Structure](#ProjectStructure)
 - [Installation](#Installation)
 
