@@ -4,7 +4,7 @@ import {useState} from "react";
 import 'audio-react-recorder/dist/index.css'
 import {MicrophoneIcon} from "@heroicons/react/solid";
 import { Icon } from '@iconify/react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
 
@@ -54,33 +54,15 @@ function App() {
     const upload = () => {
         setLoading(true);
         console.log('uploading...')
-        // const data = new FormData();
-        // data.append("file", audioData["blob"]);
-        // let url = "http://localhost:8888/submit";
-
-        // axios.post(url, data).then((res) => {
-        //     const { data } = res;
-
-            
-
-        //     setLoading(false);
-        // });
+        
         const data = new FormData();
-        data.append("file", audioData["blob"]);
-        console.log(data)
+        data.append("audio", audioData["blob"], sentence);
+        
+        
         axios({
             method: 'POST',
             url: 'http://localhost:8888/submit',
-            data: {
-                    
-                    sentence: sentence,
-                    transcription: data
-                }
-
-        })
-        .then((response) => {
-            console.log("sent transcription")
-            
+            data: data
         })
         .catch((error) => {
             if (error.response) {
