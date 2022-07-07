@@ -1,20 +1,6 @@
 """Routes for parent Flask app."""
-from email.mime import audio
 from flask import request, jsonify
-import json
-from datetime import datetime, timezone, timedelta
-from pprint import pprint
-import librosa
-
-
-def extract_audio(audio, sr=8000):
-    wav, sample_rate = librosa.load(audio, sr=sr)
-    dur = float(len(wav) / sample_rate)
-    channel = len(wav.shape)
-    print(f"Audio has {channel} channels")
-    wav_return = wav
-    return wav_return
-
+from flask_app.helpers import extract_audio
 
 def init_routes(app):
     """A factory function that takes in the server 
@@ -33,15 +19,11 @@ def init_routes(app):
 
     @app.route('/submit', methods=["POST"])
     def publish_text_audio_pair():
-        # data = json.loads(request.data)
-        # pprint(data)
-        # pprint(request.files)
-        # audio = request.files
-        pprint(request.data)
-        # audio = request.json.data
-        # audio = extract_audio(audio)
-        # if data.get("transcription").get("type") == 'audio/wav':
-            # pprint(request.files)
+        audio = request.files['audio']
+        sentence = audio.filename
+        audio = extract_audio(audio)
+        print("sentence", sentence)
+
         return "200"
 
     
