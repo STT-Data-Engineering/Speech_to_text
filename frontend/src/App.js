@@ -33,23 +33,54 @@ function App() {
     }
 
     const loadText = () => {
-        console.log("loading text")
-        setSentence("አገራችን ከአፍሪካም ሆነ ከሌሎች የአለም አገራት ጋር ያላትን አለም አቀፋዊ ግንኙነት ወደ ላቀ ደረጃ ያሸጋገረ ሆኗል በአገር ውስጥ አራት አለም")
+        axios({
+            method: 'GET',
+            url: 'http://localhost:8888/get_text',
+        })
+        .then((response) => {
+            setSentence(response.data.text)
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+                }
+        })
+        
         
     }
 
     const upload = () => {
+        setLoading(true);
         console.log('uploading...')
+        // const data = new FormData();
+        // data.append("file", audioData["blob"]);
+        // let url = "http://localhost:8888/submit";
+
+        // axios.post(url, data).then((res) => {
+        //     const { data } = res;
+
+            
+
+        //     setLoading(false);
+        // });
+        const data = new FormData();
+        data.append("file", audioData["blob"]);
+        console.log(data)
         axios({
             method: 'POST',
             url: 'http://localhost:8888/submit',
             data: {
-                sentence: sentence,
-                transcription: audioData
-            }
+                    
+                    sentence: sentence,
+                    transcription: data
+                }
+
         })
         .then((response) => {
-            console.log("sending transcription")
+            console.log("sent transcription")
+            
         })
         .catch((error) => {
             if (error.response) {
@@ -58,6 +89,7 @@ function App() {
                 console.log(error.response.headers)
                 }
             })
+        setLoading(false);
     }
 
     const skip = () => {
