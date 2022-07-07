@@ -33,6 +33,9 @@ The aim of this project is to produce a tool that can be deployed to process pos
 There are several files in the repository, including Python scripts, Jupyter notebooks,  and text files. 
 
 ## Installation
+```
+git clone https://github.com/STT-Data-Engineering/Speech_to_text
+```
 
 ## Contributors
 
