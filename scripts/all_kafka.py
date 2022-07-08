@@ -27,6 +27,14 @@ class AllKafka():
             sentences = file.readlines()
             allSentence.extend(sentences)
         return allSentence
+
+    def csv_to_list(self, data):
+        "A function to include list of texts in csv"
+        text_lis =[]
+        for i in range(len(data)):
+            text_lis.append(data["text"][i])
+
+        return (text_lis)
     
     def create_consumer(self, topic):
         """
