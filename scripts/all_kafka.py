@@ -8,8 +8,7 @@ class AllKafka():
     def __init__ (self):
         pass
     
-    @staticmethod
-    def create_producer():
+    def create_producer(self):
         """
         A function that creates a Kafka producer
         """
@@ -28,9 +27,16 @@ class AllKafka():
             sentences = file.readlines()
             allSentence.extend(sentences)
         return allSentence
+
+    def csv_to_list(self, data):
+        "A function to include list of texts in csv"
+        text_lis =[]
+        for i in range(len(data)):
+            text_lis.append(data["text"][i])
+
+        return (text_lis)
     
-    @staticmethod
-    def create_consumer(topic):
+    def create_consumer(self, topic):
         """
         A function to create a Kafka consumer
         """
@@ -39,8 +45,7 @@ class AllKafka():
                              value_deserializer=lambda x: loads(x.decode('utf-8')))
         return consumer
     
-    @staticmethod
-    def create_topic(topic):
+    def create_topic(self, topic):
         """
         A function to create topic in Kafka cluster
         """
