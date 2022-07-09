@@ -12,11 +12,6 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install matplotlib
-          pip install setuptools
-          
-          if [ -e reports/report.txt ] 
-          then
-            cat reports/report.txt > report.md
-            
+          pip install setuptools 
           cml publish images/output.png --md >> report.md
           cml send-comment report.md
