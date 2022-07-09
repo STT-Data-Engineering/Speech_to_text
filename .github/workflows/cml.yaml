@@ -13,5 +13,10 @@ jobs:
         run: |
           pip install matplotlib
           pip install setuptools
+          
+          if [ -e reports/report.txt ] 
+          then
+            cat reports/report.txt > report.md
+            
           cml publish images/output.png --md >> report.md
           cml send-comment report.md
