@@ -1,2 +1,2 @@
-* The pipeline below shows the integration of audio and text collection
+### The pipeline below shows the integration of audio and text collection
 ---
