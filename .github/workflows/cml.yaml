@@ -15,8 +15,3 @@ jobs:
           pip install setuptools
           cat reports/report.txt > report.md
           cml publish images/output.png --md >> report.md
-          
-                    
-          cat reports/reports2.txt > report.md
-          cml publish images/end-to-end-details-design.png > report.md
-          cml send-comment report.md
