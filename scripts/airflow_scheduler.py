@@ -1,4 +1,5 @@
 # import the required packages
+import csv
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator  
@@ -27,6 +28,7 @@ def publish_untranscribed_text_to_kafka():
             """
             Send the row to Kafka
             """
+            return row['text']
 
     except Exception as e:
         print(str(e))
@@ -37,48 +39,73 @@ def publish_processed_text_audio_to_Kafka():
     # Kafka - ML Engine
 
 
-def store_untranscribed_text_to_bucket():
+def store_unprocessed_text_Audio_to_bucket():
     pass
 
 
-def publish_unprocessed_text_audio_to_spark():
-    pass
+# def publish_unprocessed_text_audio_to_spark():
+#     pass
     
 
-def store_processed_audio_to_s3():
-    print("storing to processed audio to s3 bucket")
+# def store_processed_audio_to_s3():
+#     print("storing to processed audio to s3 bucket")
     
 
-with DAG( catchup=False, dag_id='audio_transcription_scheduler', schedule_interval='*/1 * * * *', description='Amharic speech data audio processing dag', default_args=default_args) as dag:
+with DAG(  
+    catchup=False, 
+    dag_id='audio_transcription_scheduler', 
+    schedule_interval='*/1 * * * *', 
+    description='Amharic speech data audio processing dag', 
+    default_args=default_args) as dag_conf:
   
   publish_untranscribed_text_to_kafka = PythonOperator(
         task_id='untranscribed_text_to_kafka',
         python_callable = publish_untranscribed_text_to_kafka,
-        dag=dag
+        dag=dag_conf
   )
 
   publish_processed_text_audio_to_Kafka = PythonOperator(
         task_id='processed_text_audio_to_Kafka', 
         python_callable=publish_processed_text_audio_to_Kafka, 
-        dag=dag
+        dag=dag_conf
   ) 
 
-  store_untranscribed_text_to_bucket = PythonOperator(
+  store_unprocessed_text_Audio_to_bucket = PythonOperator(
         task_id='untranscribed_text_to_bucket', 
-        python_callable=store_untranscribed_text_to_bucket, 
-        dag=dag
+        python_callable=store_unprocessed_text_Audio_to_bucket, 
+        dag=dag_conf
   ) 
 
-  publish_unprocessed_text_audio_to_spark = PythonOperator(
+  publish_unprocessed_text_audio_to_spark = SparkSubmitOperator(
         task_id='unprocessed_text_audio_to_spark', 
-        python_callable=publish_unprocessed_text_audio_to_spark, 
-        dag=dag
+        conn_id='spark_local',
+        dag = dag_conf,
+        application = '/scripts/audio_processor.py', # I assume the spark script is located in the scripts directory, and the name is audio_processor.py
+        total_executor_cores = 4,        
+        executor_cores=2,
+        executor_memory='5g',
+        driver_memory='5g', 
+        execution_timeout=timedelta(minutes=10) 
   )
- 
-    
+
+  store_processed_audio_to_s3 = SparkSubmitOperator(
+        task_id='processed_text_audio_to_s3', 
+        conn_id='spark_local',
+        dag = dag_conf,
+        application = '/scripts/audio_storer.py', # I assume the spark script is located in the scripts directory, and the name is audio_storeror.py
+        total_executor_cores = 4,        
+        executor_cores=2,
+        executor_memory='5g',
+        driver_memory='5g', 
+        execution_timeout=timedelta(minutes=10) 
+  )
+  
+     
 # setting task dependencies
-publish_untranscribed_text_to_kafka >> publish_processed_text_audio_to_Kafka
-store_untranscribed_text_to_bucket >> publish_unprocessed_text_audio_to_spark >> store_processed_audio_to_s3
+publish_untranscribed_text_to_kafka >> \
+        store_unprocessed_text_Audio_to_bucket >> \
+                publish_unprocessed_text_audio_to_spark >> \
+                         store_processed_audio_to_s3
 
 
 # Refs: https://stackoverflow.com/questions/46778171/stream-files-to-kafka-using-airflow
