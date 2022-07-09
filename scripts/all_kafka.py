@@ -2,6 +2,7 @@ from kafka import KafkaProducer
 from json import dumps, loads
 from time import sleep
 from kafka import KafkaConsumer
+from kafka.admin import KafkaAdminClient, NewTopic
 
 class AllKafka():
     
@@ -27,6 +28,14 @@ class AllKafka():
             sentences = file.readlines()
             allSentence.extend(sentences)
         return allSentence
+
+    def csv_to_list(self, data):
+        "A function to include list of texts in csv"
+        text_lis =[]
+        for i in range(len(data)):
+            text_lis.append(data["text"][i])
+
+        return (text_lis)
     
     def create_consumer(self, topic):
         """
@@ -50,6 +59,29 @@ class AllKafka():
         topic_list.append(NewTopic(name=topic, num_partitions=1, replication_factor=1))
         return(admin_client.create_topics(new_topics=topic_list, validate_only=False))
     
-    
+
+    def create_topics(self, topics=[], client_id = 'test1'):
+        """
+        A function to create a number of topics at once
+        """
+        top = []
+        for topic in topics:
+            top.append(topic)
+        for t in top:
+            admin_client = KafkaAdminClient(bootstrap_servers=["localhost:9092"],
+                        client_id='tests_id',)
+
+            topic_list = []
+            topic_list.append(NewTopic(name=t, num_partitions=1, replication_factor=1))
+            admin_client.create_topics(new_topics=topic_list, validate_only=False)
+
+        admin_client = KafkaAdminClient(bootstrap_servers=["localhost:9092"],
+        client_id='tests_id',)
+        all_topics = admin_client.list_topics()
+        all_topics.sort()
+        created_topics = top
+        created_topics.sort()
+        return {'New Topics': created_topics, 'All Topics': all_topics}
+        
 if __name__ == "__main__":
     kf = AllKafka()

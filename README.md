@@ -39,7 +39,7 @@ git clone https://github.com/STT-Data-Engineering/Speech_to_text
 * [Henok Tilaye](https://github.com/Hen0k)
 * [Biruk Getaneh](https://github.com/bkget)
 * [Kevin Shyaka](https://github.com/skevin-dev)
-* [Tadesse Kabede](https://github.com/tadesse381)
+* [Tadesse Kebede](https://github.com/tadesse381)
 * [Diye Mark](https://github.com/Danu-B)
 * [Danayt Bulom](https://github.com/DiyeMark)
 <!-- Copy-paste in your Readme.md file -->

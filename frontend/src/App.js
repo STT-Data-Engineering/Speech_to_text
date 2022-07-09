@@ -4,14 +4,15 @@ import {useState} from "react";
 import 'audio-react-recorder/dist/index.css'
 import {MicrophoneIcon} from "@heroicons/react/solid";
 import { Icon } from '@iconify/react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import axios from 'axios';
 
 function App() {
     const [recordState, setRecordState] = useState(null);
     const [audioData, setAudioData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [sentence, setSentence] = useState('hey');
     const Spinner = require('react-spinkit');
 
     const stop = () => {
@@ -31,14 +32,55 @@ function App() {
         setAudioData(null);
     }
 
+    const loadText = () => {
+        axios({
+            method: 'GET',
+            url: 'http://localhost:8888/get_text',
+        })
+        .then((response) => {
+            setSentence(response.data.text)
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+                }
+        })
+        
+        
+    }
+
     const upload = () => {
+        setLoading(true);
         console.log('uploading...')
+        
+        const data = new FormData();
+        data.append("audio", audioData["blob"], sentence);
+        
+        
+        axios({
+            method: 'POST',
+            url: 'http://localhost:8888/submit',
+            data: data
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+                }
+            })
+        setLoading(false);
     }
 
     const skip = () => {
         setLoading(true);
-        setRecordState(null);
-        setAudioData(null);
+        loadText();
+        
+        clear();
+        setLoading(false);
+        
     }
 
     const onStop = (data) => {
@@ -95,8 +137,10 @@ function App() {
                   <Skeleton height={30} width={1000} count={2} />
                   :
                   <p className='text-2xl text-center font-bold'>
-                      አገራችን ከአፍሪካም ሆነ ከሌሎች የአለም አገራት ጋር ያላትን አለም
-                      አቀፋዊ ግንኙነት ወደ ላቀ ደረጃ ያሸጋገረ ሆኗል በአገር ውስጥ አራት አለም
+                      {
+                      sentence
+                      }
+
                   </p>
               }
 

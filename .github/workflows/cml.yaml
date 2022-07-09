@@ -1,0 +1,17 @@
+name: cml
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: iterative/setup-cml@v1
+      - name: cml
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install matplotlib
+          pip install setuptools
+          cml publish images/output.png --md >> report.md
+          cml send-comment report.md
