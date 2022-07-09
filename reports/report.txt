@@ -1,0 +1,3 @@
+# CML Report for PR
+---
+The graph below shows the distribution of category in the collected amharic text data.
