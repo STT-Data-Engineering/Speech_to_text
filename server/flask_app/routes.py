@@ -1,13 +1,18 @@
 """Routes for parent Flask app."""
 import sys
-sys.path.append('../scripts')
-from all_kafka import AllKafka
+# sys.path.append('../scripts')
+# from all_kafka import AllKafka
 from flask import request, jsonify
 from flask_app.helpers import extract_audio
 from flask_app.helpers import get_uuid
 from pprint import pprint
+from json import loads, dumps
+from kafka import KafkaProducer, KafkaConsumer
 from kafka.errors import NoBrokersAvailable
 
+TEXT_TOPIC = "text"
+TEXT_AUDIO_PAIR_TOPIC = "text.audio.pair"
+BROKER_ADDRESS = 'localhost:39092'
 
 
 def init_routes(app):
@@ -15,8 +20,13 @@ def init_routes(app):
     object and initializes the routes.
     """
     try:
-        producer = AllKafka.create_producer()
-        consumer = AllKafka.create_consumer(topic="text")
+        producer = KafkaProducer(bootstrap_servers=BROKER_ADDRESS,
+                                 value_serializer=lambda x: dumps(x).encode('utf-8'))
+        consumer = KafkaConsumer(TEXT_TOPIC,
+                                 bootstrap_servers=BROKER_ADDRESS,
+                                 auto_offset_reset='earliest',
+                                 enable_auto_commit=False,
+                                 value_deserializer=lambda x: loads(x.decode('utf-8')))
     except NoBrokersAvailable:
         print("NoBrokersAvailable")
 
@@ -37,8 +47,7 @@ def init_routes(app):
                 return jsonify(text=sentence)
         except NameError:
             print("Consumer not init")
-            sentence = "አገራችን ከአፍሪካም ሆነ ከሌሎች የአለም አገራት ጋር ያላትን አለም አቀፋዊ ግንኙነት ወደ ላቀ ደረጃ ያሸጋገረ ሆኗል በአገር ውስጥ አራት አለም"
-            return jsonify(text=sentence)
+            return 404
 
     @app.route('/submit', methods=["POST"])
     def publish_text_audio_pair():
@@ -54,7 +63,7 @@ def init_routes(app):
             "audio": audio
         }
         try:
-            res = producer.send("text.audio.pair", value=data)
+            res = producer.send(TEXT_AUDIO_PAIR_TOPIC, value=data)
             print(res)
         except NameError:
             print("Producer not created")
