@@ -34,6 +34,7 @@ function App() {
     }
 
     const loadText = () => {
+        setLoading(true);
         axios({
             method: 'GET',
             url: textURL,
@@ -48,6 +49,7 @@ function App() {
                 console.log(error.response.headers)
                 }
         })
+        setLoading(false);
         
         
     }
