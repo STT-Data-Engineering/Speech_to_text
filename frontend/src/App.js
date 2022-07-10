@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
+import { submitURL, textURL } from './backendConstants';
 
 function App() {
     const [recordState, setRecordState] = useState(null);
@@ -33,9 +34,10 @@ function App() {
     }
 
     const loadText = () => {
+        setLoading(true);
         axios({
             method: 'GET',
-            url: 'http://localhost:8888/get_text',
+            url: textURL,
         })
         .then((response) => {
             setSentence(response.data.text)
@@ -47,6 +49,7 @@ function App() {
                 console.log(error.response.headers)
                 }
         })
+        setLoading(false);
         
         
     }
@@ -61,7 +64,7 @@ function App() {
         
         axios({
             method: 'POST',
-            url: 'http://localhost:8888/submit',
+            url: submitURL,
             data: data
         })
         .catch((error) => {
