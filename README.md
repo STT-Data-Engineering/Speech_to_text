@@ -42,7 +42,4 @@ git clone https://github.com/STT-Data-Engineering/Speech_to_text
 * [Diye Mark](https://github.com/Danu-B)
 * [Danayt Bulom](https://github.com/DiyeMark)
 <!-- Copy-paste in your Readme.md file -->
-![contributors list](https://contrib.rocks/image?repo=STT-Data-Engineering/Speech_to_text)
-
-Made with [contrib.rocks](https://contrib.rocks)
  
